@@ -18,17 +18,20 @@ function render_drone(drone_id, drone) {
     </svg>`
 
     if (dom_drone == null) {
+        // Add drone to dom
         document.getElementById('content').innerHTML += `
             <div id="drone_${drone_id}" style="position: absolute; top: ${drone_x}px; left: ${drone_y}px; transition: all 1s;">
                 <a href="info/${drone_id}">${drone_icon}</a>
             </div>`
     } else {
+        // Change position of existing drone
         dom_drone.style.top = `${drone_x}px`
         dom_drone.style.left =`${drone_y}px`
     }
 }
 
 function load_data() {
+    // Load initial data
     fetch('api/flight_map')
         .then(response => response.json())
         .then(data => {
@@ -39,7 +42,7 @@ function load_data() {
 }
 
 function sse() {
-    console.log('eventsource')
+    // Get server sent event updates
     let event_src = new EventSource('/stream');
     event_src.onmessage = function (e) {
         const drone = JSON.parse(e.data)
