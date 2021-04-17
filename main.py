@@ -27,7 +27,6 @@ def flight_map():
 
 
 def event():
-    pass
     for i in range(10):
         sleep(random.uniform(0.01, 2.0))
         drone = data.update_random_drone()
