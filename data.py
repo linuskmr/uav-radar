@@ -1,5 +1,4 @@
 import random
-import gunicorn
 
 DRONES = 10
 
@@ -7,6 +6,7 @@ drones = dict()
 
 
 def random_drone(drone_id):
+    # Generate a random drone
     return {
         'model': random.choice(['Holybro X500', 'DJI Mini 2', 'DJI Mavic Air 2', 'Hubsan Zino 2', 'Parrot Anafi']),
         'id': drone_id,
@@ -27,6 +27,7 @@ def random_drone(drone_id):
 
 
 def update_drone(drone):
+    # Let the drone fly...
     drone['position']['latitude'] = round((drone['position']['latitude'] + random.uniform(-5.0, 5.0)) % 90.0, 5)
     drone['position']['longitude'] = round((drone['position']['longitude'] + random.uniform(-5.0, 5.0)) % 90.0, 5)
     drone['position']['height'] = round((drone['position']['height'] + random.uniform(-5.0, 5.0)) % 50.0, 2)

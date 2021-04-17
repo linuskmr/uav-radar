@@ -16,6 +16,8 @@ def home():
 
 @app.route('/api/flight_map')
 def flight_map():
+    # Return only the Id's and position of the drones to save data.
+    # Detailed information can be retrieved with /api/info/<drone_id>.
     current_map = dict()
     for drone_id, drone in data.drones.items():
         current_map[drone_id] = {
@@ -27,6 +29,8 @@ def flight_map():
 
 
 def event():
+    # Sever Sent Event sends updates to all connected browsers when a change occurs (For simplicity, this function
+    # itself causes the change, but this could also come from outside and notify this function)
     for i in range(10):
         sleep(random.uniform(0.01, 2.0))
         drone = data.update_random_drone()
@@ -39,6 +43,8 @@ def stream():
 
 
 def print_dict(content, nested=2):
+    # Prints a directory.
+    # Creates headlines for each nested dict.
     output = ''
     for key, value in content.items():
         key = key.replace('_', ' ').capitalize()
