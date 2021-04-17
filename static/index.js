@@ -19,7 +19,7 @@ function render_drone(drone_id, drone) {
 
     if (dom_drone == null) {
         document.getElementById('content').innerHTML += `
-            <div id="drone_${drone_id}" style="position: absolute; top: ${drone_x}px; left: ${drone_y}px">
+            <div id="drone_${drone_id}" style="position: absolute; top: ${drone_x}px; left: ${drone_y}px; transition: all 1s;">
                 <a href="info/${drone_id}">${drone_icon}</a>
             </div>`
     } else {
