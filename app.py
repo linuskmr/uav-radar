@@ -62,6 +62,3 @@ def api_drone_info(drone_id):
 @app.route('/info/<drone_id>')
 def drone_info(drone_id):
     return render_template('info.html', content=Markup(print_dict(api_drone_info(drone_id))))
-
-
-app.run()
