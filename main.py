@@ -1,9 +1,15 @@
 import json
+import platform
+import psutil
 import random
+import re
+import socket
+import uuid
 from time import sleep
 import flask
 from flask import Flask, render_template
 from markupsafe import Markup
+
 import data
 
 app = Flask(__name__)
@@ -12,6 +18,42 @@ app = Flask(__name__)
 @app.route('/')
 def home():
     return render_template('index.html')
+
+def get_size(bytes, suffix="B"):
+    """
+    Scale bytes to its proper format
+    e.g:
+        1253656 => '1.20MB'
+        1253656678 => '1.17GB'
+    """
+    factor = 1024
+    for unit in ["", "K", "M", "G", "T", "P"]:
+        if bytes < factor:
+            return f"{bytes:.2f}{unit}{suffix}"
+        bytes /= factor
+
+@app.route('/stats')
+def stats():
+    uname = platform.uname()
+    cpufreq = psutil.cpu_freq()
+    svmem = psutil.virtual_memory()
+    return {
+        'system': uname.system,
+        'node name': uname.node,
+        'release': uname.release,
+        'version': uname.version,
+        'machine': uname.machine,
+        'processor': uname.processor,
+        'physical cores': psutil.cpu_count(logical=False),
+        'logical cores': psutil.cpu_count(logical=True),
+        'max frequency': cpufreq.max,
+        'min frequency': cpufreq.min,
+        'current frequency': cpufreq.current,
+        'cpu usage': psutil.cpu_percent(percpu=False),
+        'total mem': get_size(svmem.total),
+        'available mem': get_size(svmem.available),
+        'used mem': get_size(svmem.used),
+    }
 
 
 @app.route('/api/flight_map')
