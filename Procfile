@@ -1,1 +1,1 @@
-web: gunicorn wsgi:flightradar
+web: gunicorn wsgi:app
